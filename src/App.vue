@@ -1,26 +1,54 @@
 <template>
   <div id="app">
     <Navbar />
-    <button>Inscrever Ação V</button>
+    <button
+      @click="
+        subscribe({
+          event: 'subscribe',
+          stocks: ['V'],
+        })
+      "
+    >
+      Inscrever
+    </button>
+    <button
+      @click="
+        unsubscribe({
+          event: 'unsubscribe',
+          stocks: ['V'],
+        })
+      "
+    >
+      desinscrever
+    </button>
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
+import Navbar from "./components/Navbar.vue";
 export default {
-  components:{
-    Navbar
+  components: {
+    Navbar,
   },
   data() {
     return {
       connection: null,
+      acao: {},
     };
   },
-  methods:{
-    sendMessage: function(message){
-      console.log(this.connection)
-      this.connection.send(message)
-    }
+  methods: {
+    subscribe: function (message) {
+      console.log(this.connection);
+      message = message = JSON.stringify(message);
+      console.log(message);
+      this.connection.send(message);
+    },
+    unsubscribe: function (message) {
+      console.log(this.connection);
+      message = message = JSON.stringify(message);
+      console.log(message);
+      this.connection.send(message);
+    },
   },
   created() {
     console.log("Começando conexão com servidor...");
@@ -33,6 +61,8 @@ export default {
 
     this.connection.onmessage = function (event) {
       console.log(event);
+      this.acao = JSON.parse(event.data);
+      console.log(this.acao.stocks.V);
     };
   },
 };
@@ -44,9 +74,18 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
+  background: #6D6D6D;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
-div #app{
-  background: #eee
+body, div{
+  margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
 }
 </style>
