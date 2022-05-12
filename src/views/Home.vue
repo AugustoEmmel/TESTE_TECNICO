@@ -15,7 +15,7 @@ import TickerAcoes from "../components/TickerAcoes.vue";
 import TabelaTicker from "../components/TabelaTicker.vue";
 import PesquisaAcoes from "../components/PesquisaAcoes.vue";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     Grafico,
     TickerAcoes,

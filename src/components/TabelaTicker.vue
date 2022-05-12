@@ -36,8 +36,8 @@ export default {
       columns: ["Ação", "Preço", "Alteração"],
     };
   },
-  methods:{
-      sortTable(col) {
+  methods: {
+    sortTable(col) {
       if (this.sortColumn === col) {
         this.ascending = !this.ascending;
       } else {
@@ -56,7 +56,7 @@ export default {
         return 0;
       });
     },
-  }
+  },
 };
 </script>
 

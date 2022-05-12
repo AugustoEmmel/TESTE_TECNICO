@@ -15,11 +15,11 @@ export default {};
 <style>
 nav.navbar {
   padding: 20px;
-  background: #1C1C1C;
+  background: #1c1c1c;
   text-align: left;
 }
 
-nav.navbar  a{
+nav.navbar a {
   font-weight: bold;
   color: crimson;
   margin: 10px;
