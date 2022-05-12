@@ -26,14 +26,20 @@
 export default {
   data() {
     return {
+      //Testando
       rows: [
         {
           acao: "V",
           preco: 75.0,
           alteracao: `${1.2}%`,
         },
+        {
+          acao: "ZQ",
+          preco: 80.0,
+          alteracao: `${-2.2}%`,
+        },
       ],
-      columns: ["Ação", "Preço", "Alteração"],
+      columns: ["acao", "preco", "alteracao"],
     };
   },
   methods: {
