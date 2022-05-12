@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <Navbar/>
+    <Navbar />
     <div class="container">
-      <div class="grid-item-graph grid-item"></div>
-      <div class="grid-item-search grid-item"></div>
-      <div class="grid-item-list grid-item"></div>
+      <div class="grid-item-stocks-bar grid-item">Barra Ações</div>
+      <div class="grid-item-graph grid-item">Gráfico</div>
+      <div class="grid-item-search grid-item">Procura de Ações</div>
+      <div class="grid-item-list grid-item">Lista de ações</div>
     </div>
     <!-- <button
       @click="
@@ -28,7 +29,9 @@
     </button> -->
     <footer class="footerApp">
       Contato
-      <address>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque esse quod aut quidem magni, eos exercitationem qui inventore odio tenetur incidunt similique repudiandae tempora quo porro dolorum voluptatem consectetur nisi.</address>
+      <address>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+      </address>
     </footer>
   </div>
 </template>
@@ -88,19 +91,6 @@ export default {
   height: auto;
   width: auto;
   margin: 0;
- 
-}
-div.container {
-  border: 6px solid black;
-    display: grid;
-    grid-template: repeat(3, 165px) / repeat(3, 165px);
-}
-.grid-item{
-    color: white;
-    font-size: 1.5rem;
-    padding: 1rem;
-    text-align: center;
-    border: 6px solid black;
 }
 body,
 div {
@@ -111,5 +101,36 @@ div {
   font: inherit;
   vertical-align: baseline;
 }
-
+div.container {
+  padding: 50px;
+  display: grid;
+  grid-template: repeat(4, 100px) / repeat(3, 350px);
+  justify-content: space-evenly;
+  grid-auto-flow: column;
+}
+.grid-item {
+  color: white;
+  font-size: 1rem;
+  padding: 1rem;
+  text-align: center;
+  border: 6px solid black;
+}
+.grid-item-stocks-bar{
+  grid-column: 1 / span 3;
+  margin-bottom: 40px;
+}
+.grid-item-graph{
+  background-color:#eee;
+  color: black;
+  grid-row: 2 / span 3;
+  grid-column: 1 / span 2;
+}
+.grid-item-list{
+  grid-row: 3 / span 2;
+}
+footer.footerApp {
+  padding: 20px;
+  background: #1c1c1c;
+  text-align: left;
+}
 </style>
