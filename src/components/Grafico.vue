@@ -1,5 +1,5 @@
 <template>
-  
+  <div class="grid-item-graph grid-item">Gráfico</div>
 </template>
 
 <script>
