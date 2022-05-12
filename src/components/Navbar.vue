@@ -14,7 +14,7 @@ export default {};
 
 <style>
 nav.navbar {
-  padding: 30px;
+  padding: 20px;
   background: #1C1C1C;
   text-align: left;
 }
