@@ -1,6 +1,6 @@
 <template>
-  <div class="grid-item-list grid-item">
-    <table id="secondTable">
+  <div>
+    <table id="tabela-ticker">
       <thead>
         <tr>
           <th v-for="col in columns" :key="col" @click="sortTable(col)">
@@ -26,7 +26,6 @@
 export default {
   data() {
     return {
-      //Testando
       rows: [
         {
           acao: "V",
@@ -67,7 +66,6 @@ export default {
 </script>
 
 <style>
-/* Tabela de ações */
 table {
   font-family: "Open Sans", sans-serif;
   width: 100%;

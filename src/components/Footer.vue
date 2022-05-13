@@ -1,12 +1,18 @@
 <template>
   <footer class="footerApp">
     Contato
-    <address>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</address>
+    <address>{{ infoContato }}</address>
   </footer>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      infoContato: "+xx (xx) xxxxx-xxxx",
+    };
+  },
+};
 </script>
 
 <style>

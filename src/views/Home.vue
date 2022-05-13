@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <div class="container">
-      <TickerAcoes />
-      <Grafico />
-      <PesquisaAcoes />
-      <TabelaTicker />
+      <TickerAcoes class="grid-item-stocks-bar grid-item" :connection="connection"/>
+      <Grafico class="grid-item-graph grid-item"/>
+      <PesquisaAcoes class="grid-item-search grid-item"/>
+      <TabelaTicker class="grid-item-list grid-item"/>
     </div>
   </div>
 </template>
@@ -25,24 +25,9 @@ export default {
   data() {
     return {
       connection: null,
-      acao: {},
+      acao:{}
     };
-  },
-  methods: {
-    // Teste pegando ações
-    subscribe(message) {
-      console.log(this.connection);
-      message = message = JSON.stringify(message);
-      this.connection.send(message);
-    },
-    unsubscribe(message) {
-      console.log(this.connection);
-      message = message = JSON.stringify(message);
-      console.log(message);
-      this.connection.send(message);
-    },
-  },
-  mounted() {
+  },mounted() {
     console.log("Começando conexão com servidor...");
     this.connection = new WebSocket("ws://localhost:8080");
 

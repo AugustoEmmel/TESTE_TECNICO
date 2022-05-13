@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-item-stocks-bar grid-item">
+  <div>
     <div class="hwrap">
       <div class="hmove">
         <div class="hitem">
@@ -20,19 +20,16 @@ export default {};
 </script>
 
 <style>
-/* (A) FIXED WRAPPER */
 .hwrap {
-  overflow: hidden; /* HIDE SCROLL BAR */
+  overflow: hidden;
   background: #eee;
   color: #1c1c1c;
 }
 
-/* (B) MOVING TICKER WRAPPER */
 .hmove {
   display: flex;
 }
 
-/* (C) ITEMS - INTO A LONG HORIZONTAL ROW */
 .hitem {
   flex-shrink: 0;
   width: 100%;
@@ -40,8 +37,6 @@ export default {};
   text-align: center;
 }
 
-/* (D) ANIMATION - MOVE ITEMS FROM RIGHT TO LEFT */
-/* 4 ITEMS -400%, CHANGE THIS IF YOU ADD/REMOVE ITEMS */
 @keyframes tickerh {
   0% {
     transform: translate3d(100%, 0, 0);
