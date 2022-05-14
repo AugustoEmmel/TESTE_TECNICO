@@ -1,10 +1,9 @@
 <template>
   <div class="home">
     <div class="container">
-      <TickerAcoes class="grid-item-stocks-bar grid-item" :connection="connection"/>
-      <Grafico class="grid-item-graph grid-item"/>
-      <PesquisaAcoes class="grid-item-search grid-item"/>
-      <TabelaTicker class="grid-item-list grid-item"/>
+      <TickerAcoes class="grid-item-stocks-bar grid-item" />
+      <Grafico class="grid-item-graph grid-item" />
+      <TabelaAcoes :connection="connection" class="grid-item-list grid-item" />
     </div>
   </div>
 </template>
@@ -12,35 +11,38 @@
 <script>
 import Grafico from "../components/Grafico.vue";
 import TickerAcoes from "../components/TickerAcoes.vue";
-import TabelaTicker from "../components/TabelaTicker.vue";
-import PesquisaAcoes from "../components/PesquisaAcoes.vue";
+import TabelaAcoes from "../components/TabelaAcoes.vue";
 export default {
   name: "Home",
   components: {
     Grafico,
     TickerAcoes,
-    TabelaTicker,
-    PesquisaAcoes,
+    TabelaAcoes,
   },
   data() {
     return {
       connection: null,
-      acao:{}
+      acao: {},
     };
-  },mounted() {
+  },
+  created() {
     console.log("Começando conexão com servidor...");
     this.connection = new WebSocket("ws://localhost:8080");
 
-    this.connection.onopen = function (event) {
-      console.log(event);
+    this.connection.onopen = (e) => {
+      console.log(e);
       console.log("Conectador ao servidor com sucesso!");
     };
 
-    this.connection.onmessage = function (event) {
-      console.log(event);
-      this.acao = JSON.parse(event.data);
+    this.connection.onmessage = (e) => {
+      console.log(e);
+      this.acao = JSON.parse(e.data);
       console.log(this.acao);
     };
+
+    setTimeout(() => {
+      console.log(this.connection);
+    }, 5000);
   },
 };
 </script>
@@ -71,7 +73,8 @@ div.container {
   grid-column: 1 / span 2;
 }
 .grid-item-list {
-  grid-row: 3 / span 2;
+  grid-row: 2 / span 3;
   padding: 0;
+  border: 1px solid black;
 }
 </style>
