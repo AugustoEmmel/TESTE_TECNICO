@@ -37,4 +37,35 @@ div {
   font: inherit;
   vertical-align: baseline;
 }
+.material-symbols-outlined {
+  align-self: center;
+  font-variation-settings: "FILL" 20, "wght" 500, "GRAD" 0, "opsz" 48;
+}
+.material-symbols-outlined:hover {
+  cursor: pointer;
+}
+button {
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.bt-confirmar {
+  background-color: #4caf50;
+}
+.bt-confirmar:hover {
+  background-color: #45a049;
+}
+.bt-confirmar:active {
+  background-color: #317234;
+}
+.bt-cancelar {
+  background-color: #c52929;
+}
+.bt-cancelar:hover {
+  background-color: #a04545;
+}
+.bt-cancelar:active {
+  background-color: #723131;
+}
 </style>

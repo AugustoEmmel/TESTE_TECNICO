@@ -60,21 +60,20 @@ div.container {
   font-size: 1rem;
   padding: 1rem;
   text-align: center;
-  border: 2px solid black;
 }
 .grid-item-stocks-bar {
   grid-column: 1 / span 3;
   margin-bottom: 40px;
 }
 .grid-item-graph {
-  background-color: #eee;
+  background: rgb(197, 197, 197);
   color: black;
   grid-row: 2 / span 3;
   grid-column: 1 / span 2;
+  border-radius: 10px;
 }
 .grid-item-list {
   grid-row: 2 / span 3;
   padding: 0;
-  border: 1px solid black;
 }
 </style>
