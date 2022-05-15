@@ -25,27 +25,7 @@
       desinscrever
     </button>
   </div>
-  <div>
-    <table id="tabela-ticker">
-      <thead>
-        <tr>
-          <th v-for="col in columns" :key="col" @click="sortTable(col)">
-            {{ col }}
-            <div
-              class="arrow"
-              v-if="col == sortTable"
-              v-bind:class="ascending ? 'arrow_up' : 'arrow_down'"
-            ></div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="row in rows" :key="row">
-          <td v-for="col in columns" :key="col">{{ row[col] }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  
 </div>
 </template>
 

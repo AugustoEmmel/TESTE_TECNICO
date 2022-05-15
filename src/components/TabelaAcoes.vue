@@ -46,8 +46,9 @@ export default {
   },
   data() {
     return {
-      acoes: ["1","2"],
+      acoes: ["1", "2"],
       showModal: false,
+      stocks:{}
     };
   },
   methods: {
@@ -86,10 +87,16 @@ export default {
   border-radius: 10px;
 }
 .flex-container-item {
+  padding: 3px;
+  border-radius: 10px;
+}
+.flex-container-item-1 {
   flex-grow: 1;
 }
 .flex-container-item-2 {
   flex-grow: 6;
+  background: white;
+  margin: 10px;
 }
 .grid-search-container {
   display: grid;
@@ -109,6 +116,7 @@ export default {
   grid-row: 2;
   width: 300px;
   border-radius: 10px;
+  margin-left:3px;
 }
 .grid-search-item-3 {
   align-content: center;

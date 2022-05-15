@@ -23,7 +23,25 @@ export default {
     return {
       connection: null,
       acao: {},
+      stocks: [
+        "IET",
+        "V"
+      ],
+      Stocks: {}
     };
+  },
+  methods: {
+    subscribe(message) {
+      console.log(this.connection);
+      message = message = JSON.stringify(message);
+      this.connection.send(message);
+    },
+    unsubscribe(message) {
+      console.log(this.connection);
+      message = message = JSON.stringify(message);
+      console.log(message);
+      this.connection.send(message);
+    },
   },
   created() {
     console.log("Começando conexão com servidor...");
@@ -33,21 +51,29 @@ export default {
       console.log(e);
       console.log("Conectador ao servidor com sucesso!");
     };
-
     this.connection.onmessage = (e) => {
-      console.log(e);
       this.acao = JSON.parse(e.data);
-      console.log(this.acao);
+      let key = Object.keys(this.acao.stocks);
+      this.Stocks[key] = this.acao.stocks[key[0]];
+      console.log(this.Stocks, this.Stocks.V, this.Stocks.IET);
     };
 
     setTimeout(() => {
-      console.log(this.connection);
+      this.subscribe({
+        event: "subscribe",
+        stocks: this.stocks,
+      });
     }, 5000);
   },
 };
 </script>
 
 <style>
+.home {
+  height: 500px;
+  margin: 1rem;
+  padding: 5px;
+}
 div.container {
   padding: 50px;
   display: grid;
@@ -62,7 +88,7 @@ div.container {
   text-align: center;
 }
 .grid-item-stocks-bar {
-  grid-column: 1 / span 3;
+  grid-column: 2;
   margin-bottom: 40px;
 }
 .grid-item-graph {
