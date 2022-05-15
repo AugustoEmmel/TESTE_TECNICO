@@ -1,30 +1,26 @@
 <template>
   <div class="flex-container-stocks">
-    <div
-      class="flex-container-item-1 flex-container-item grid-search-container"
-    >
-      <label
-        for="grid-search-item-2"
-        class="grid-search-item grid-search-item-1"
-      >
-        Ticker de Ação
-      </label>
-      <input
-        type="text"
-        list="acoes"
-        class="grid-search-item grid-search-item-2"
-      />
-      <datalist id="acoes">
-        <option v-for="acao in acoes" :key="acao">{{ acao }}</option>
-      </datalist>
-      <span
-        class="material-symbols-outlined grid-search-item grid-search-item-3"
-        @click="toggleModal"
-      >
-        add_circle
-      </span>
+    <div class="flex-table flex-container-item">
+      <table id="table-stock">
+        <thead>
+          <tr>
+            <th>Ação</th>
+            <th>Preço</th>
+            <th>Variação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(value, key, index) in Stocks" :key="index">
+            <td>{{ key }}</td>
+            <td>$ {{ value.toFixed(2) }}</td>
+            <td>
+              xx.xx%
+              <span :class="[isArrowUp ? 'material-symbols-outlined arrow arrow-up' : 'material-symbols-outlined arrow arrow-down']"> arrow_upward </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="flex-container-item-2 flex-container-item"></div>
     <Modal v-if="showModal" @close="toggleModal">
       <h1>Confirma adicionar a ação a seus Tickers pessoais?</h1>
       <div class="flex-button-acao-container">
@@ -40,41 +36,30 @@
 <script>
 import Modal from "./Modal.vue";
 export default {
-  props: ["connection"],
+  props: ["connection", "Stocks"],
   components: {
     Modal,
   },
   data() {
     return {
-      acoes: ["1", "2"],
+      Acoes: {},
       showModal: false,
-      stocks:{}
+      stocks: {},
+      isArrowUp: true,
     };
   },
   methods: {
     toggleModal() {
       this.showModal = !this.showModal;
     },
-    subscribe(message) {
-      console.log(this.connection);
-      message = message = JSON.stringify(message);
-      this.connection.send(message);
-    },
-    unsubscribe(message) {
-      console.log(this.connection);
-      message = message = JSON.stringify(message);
-      console.log(message);
-      this.connection.send(message);
+    nextPage() {
+      if (this.currentPage * this.pageSize < Object.keys(this.Stocks).length)
+        this.currentPage++;
     },
   },
   computed() {
     return this.$props.propsData.connection;
-  },
-  mounted() {
-    setTimeout(() => {
-      console.log(this.connection);
-    }, 5000);
-  },
+  }
 };
 </script>
 
@@ -83,20 +68,47 @@ export default {
   background: rgb(197, 197, 197);
   display: flex;
   flex-flow: column;
-  gap: 5px;
   border-radius: 10px;
 }
 .flex-container-item {
-  padding: 3px;
   border-radius: 10px;
 }
-.flex-container-item-1 {
-  flex-grow: 1;
-}
-.flex-container-item-2 {
+.flex-table {
   flex-grow: 6;
   background: white;
-  margin: 10px;
+  color: black;
+  overflow-y: scroll;
+  border: 3px solid #eee;
+}
+.flex-table::-webkit-scrollbar {
+  display: none;
+}
+.flex-table {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+#table-stock {
+  width: 100%;
+  text-align: left;
+}
+#table-stock th {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0px;
+  z-index: 2;
+  background: white;
+  cursor: default;
+}
+#table-stock tr {
+  border: 1px solid #f2f2f2;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#table-stock tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+#table-stock tr:hover {
+  background-color: bisque;
 }
 .grid-search-container {
   display: grid;
@@ -116,7 +128,7 @@ export default {
   grid-row: 2;
   width: 300px;
   border-radius: 10px;
-  margin-left:3px;
+  margin-left: 3px;
 }
 .grid-search-item-3 {
   align-content: center;

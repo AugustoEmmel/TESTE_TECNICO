@@ -3,7 +3,11 @@
     <div class="container">
       <TickerAcoes class="grid-item-stocks-bar grid-item" />
       <Grafico class="grid-item-graph grid-item" />
-      <TabelaAcoes :connection="connection" class="grid-item-list grid-item" />
+      <TabelaAcoes
+        :connection="connection"
+        :Stocks="Stocks"
+        class="grid-item-list grid-item"
+      />
     </div>
   </div>
 </template>
@@ -22,12 +26,31 @@ export default {
   data() {
     return {
       connection: null,
-      acao: {},
       stocks: [
         "IET",
-        "V"
+        "N",
+        "ZHT",
+        "V",
+        "ELY",
+        "TZW",
+        "FIK",
+        "T",
+        "ZQ",
+        "NP",
+        "MJ",
+        "KG",
+        "OY",
+        "ITN",
+        "OB",
+        "ACM",
+        "QQ",
+        "X",
+        "XLC",
+        "S",
       ],
-      Stocks: {}
+      acao: {},
+      Stocks: {},
+      serverURL: "ws://localhost:8080",
     };
   },
   methods: {
@@ -42,28 +65,50 @@ export default {
       console.log(message);
       this.connection.send(message);
     },
+    wsConnect(url) {
+      console.log("Começando conexão com servidor...");
+      this.connection = new WebSocket(url);
+      this.connection.onopen = (e) => {
+        console.log(e);
+        console.log("Conectador ao servidor com sucesso!");
+      };
+    },
+    wsOnMessage() {
+      this.connection.onmessage = (e) => {
+        this.acao = JSON.parse(e.data);
+        let key = Object.keys(this.acao.stocks);
+        this.Stocks[key] = this.acao.stocks[key[0]];
+      };
+    },
+    wsClose() {
+      this.connection.onclose = (e) => {
+        console.log(
+          "Socket closed. Reconnection will be attempted in 1 second, ",
+          e.reason
+        );
+        setTimeout(() => {
+          this.wsConnect(this.serverURL);
+        }, 1000);
+      };
+    },
+    wsError() {
+      this.connection.onerror = (e) => {
+        console.error('Socket found an error: ', err.messsage, 'Closing socket')
+        this.wsClose();
+      }
+    },
   },
-  created() {
-    console.log("Começando conexão com servidor...");
-    this.connection = new WebSocket("ws://localhost:8080");
-
-    this.connection.onopen = (e) => {
-      console.log(e);
-      console.log("Conectador ao servidor com sucesso!");
-    };
-    this.connection.onmessage = (e) => {
-      this.acao = JSON.parse(e.data);
-      let key = Object.keys(this.acao.stocks);
-      this.Stocks[key] = this.acao.stocks[key[0]];
-      console.log(this.Stocks, this.Stocks.V, this.Stocks.IET);
-    };
-
+  mounted() {
+    this.wsConnect(this.serverURL);
     setTimeout(() => {
       this.subscribe({
         event: "subscribe",
         stocks: this.stocks,
       });
-    }, 5000);
+    }, 3000);
+    this.wsOnMessage();
+    this.wsError();
+    this.wsClose();
   },
 };
 </script>

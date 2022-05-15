@@ -44,6 +44,16 @@ div {
 .material-symbols-outlined:hover {
   cursor: pointer;
 }
+.arrow{
+  text-align: center;
+}
+.arrow-up{
+  color: rgb(47, 255, 75);
+}
+.arrow-down{
+  color: rgb(255, 47, 47);
+  transform: rotate(180deg);
+}
 button {
   color: white;
   border: none;
