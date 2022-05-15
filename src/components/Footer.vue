@@ -20,5 +20,6 @@ footer.footerApp {
   padding: 10px;
   background: #1c1c1c;
   text-align: left;
+  bottom: 0%;
 }
 </style>

@@ -95,7 +95,7 @@ export default {
   position: sticky;
   position: -webkit-sticky;
   top: 0px;
-  z-index: 2;
+  z-index: 9999;
   background: white;
   cursor: default;
 }

@@ -25,7 +25,7 @@ export default {
   color: #eee;
   background: #6d6d6d;
   height: auto;
-  width: auto;
+  width: 100%;
   margin: 0;
 }
 body,

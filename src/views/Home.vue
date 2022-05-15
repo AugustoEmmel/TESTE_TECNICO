@@ -115,26 +115,28 @@ export default {
 
 <style>
 .home {
-  height: 500px;
-  margin: 1rem;
+  height: 100%;
+  margin: 5px;
   padding: 5px;
 }
 div.container {
-  padding: 50px;
+  padding: 15px;
+  margin: 16px;
   display: grid;
   grid-template: repeat(4, 100px) / repeat(3, 350px);
-  justify-content: space-evenly;
+  justify-content: space-between;
   grid-auto-flow: column;
+  gap: 16px;
 }
 .grid-item {
   color: white;
   font-size: 1rem;
-  padding: 1rem;
   text-align: center;
 }
 .grid-item-stocks-bar {
-  grid-column: 2;
-  margin-bottom: 40px;
+  grid-column: 1 / span 3;
+  width: auto;
+  border-radius: 10px;
 }
 .grid-item-graph {
   background: rgb(197, 197, 197);
@@ -145,6 +147,5 @@ div.container {
 }
 .grid-item-list {
   grid-row: 2 / span 3;
-  padding: 0;
 }
 </style>
