@@ -24,12 +24,8 @@
 </template>
 
 <script>
-import Modal from "./Modal.vue";
 export default {
   props: ["Acoes"],
-  components: {
-    Modal,
-  },
   data() {
     return {
       isArrowUp: false,
