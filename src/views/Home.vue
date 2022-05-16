@@ -1,11 +1,10 @@
 <template>
   <div class="home">
     <div class="container">
-      <TickerAcoes class="grid-item-stocks-bar grid-item" />
+      <TickerAcoes :Acoes="Acoes" @emitirAcao="atualizarAcoesPessoais" class="grid-item-stocks-bar grid-item" />
       <Grafico class="grid-item-graph grid-item" />
       <TabelaAcoes
-        :connection="connection"
-        :Stocks="Stocks"
+        :Acoes_Pessoais="Acoes_Pessoais"
         class="grid-item-list grid-item"
       />
     </div>
@@ -49,7 +48,8 @@ export default {
         "S",
       ],
       acao: {},
-      Stocks: {},
+      Acoes: {},
+      Acoes_Pessoais: {},
       serverURL: "ws://localhost:8080",
     };
   },
@@ -77,7 +77,7 @@ export default {
       this.connection.onmessage = (e) => {
         this.acao = JSON.parse(e.data);
         let key = Object.keys(this.acao.stocks);
-        this.Stocks[key] = this.acao.stocks[key[0]];
+        this.Acoes[key] = this.acao.stocks[key[0]];
       };
     },
     wsClose() {
@@ -92,20 +92,30 @@ export default {
       };
     },
     wsError() {
-      this.connection.onerror = (e) => {
-        console.error('Socket found an error: ', err.messsage, 'Closing socket')
+      this.connection.onerror = (err) => {
+        console.error(
+          "Socket found an error: ",
+          err.messsage,
+          "Closing socket"
+        );
         this.wsClose();
-      }
+      };
     },
+    atualizarAcoesPessoais(e){
+      console.log('oi' + e)
+      this.Acoes_Pessoais = e;
+    }
   },
-  mounted() {
+  created() {
     this.wsConnect(this.serverURL);
     setTimeout(() => {
       this.subscribe({
         event: "subscribe",
         stocks: this.stocks,
       });
-    }, 3000);
+    }, 2000);
+  },
+  mounted() {
     this.wsOnMessage();
     this.wsError();
     this.wsClose();
@@ -129,9 +139,9 @@ div.container {
   gap: 16px;
 }
 .grid-item {
-  color: white;
   font-size: 1rem;
   text-align: center;
+  border: 2px solid #eee;
 }
 .grid-item-stocks-bar {
   grid-column: 1 / span 3;
@@ -139,7 +149,7 @@ div.container {
   border-radius: 10px;
 }
 .grid-item-graph {
-  background: rgb(197, 197, 197);
+  background: white;
   color: black;
   grid-row: 2 / span 3;
   grid-column: 1 / span 2;

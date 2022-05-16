@@ -22,7 +22,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #eee;
   background: #6d6d6d;
   height: auto;
   width: 100%;
@@ -44,13 +43,20 @@ div {
 .material-symbols-outlined:hover {
   cursor: pointer;
 }
-.arrow{
+.hideScrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hideScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.arrow {
   text-align: center;
 }
-.arrow-up{
+.arrow-up {
   color: rgb(47, 255, 75);
 }
-.arrow-down{
+.arrow-down {
   color: rgb(255, 47, 47);
   transform: rotate(180deg);
 }

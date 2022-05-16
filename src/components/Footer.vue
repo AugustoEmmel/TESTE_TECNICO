@@ -19,6 +19,7 @@ export default {
 footer.footerApp {
   padding: 10px;
   background: #1c1c1c;
+  color: white;
   text-align: left;
   bottom: 0%;
 }
