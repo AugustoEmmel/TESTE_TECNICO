@@ -1,11 +1,20 @@
 <template>
   <div class="home">
     <div class="container">
-      <TickerAcoes :Acoes="Acoes" @emitirAcao="atualizarAcoesPessoais" class="grid-item-stocks-bar grid-item" />
-      <Grafico class="grid-item-graph grid-item" />
+      <TickerAcoes
+        :acoes="acoes"
+        @emitirAcao="atualizarAcoesPessoais"
+        class="grid-item-stocks-bar grid-item"
+      />
+      <Grafico
+        class="grid-item-graph grid-item"
+        :acoes_Pessoais="acoes_Pessoais"
+        :acaoNome="acaoNome"
+      />
       <TabelaAcoes
-        :Acoes_Pessoais="Acoes_Pessoais"
+        :acoes_Pessoais="acoes_Pessoais"
         class="grid-item-list grid-item"
+        @escolherAcao="getAcaoNome"
       />
     </div>
   </div>
@@ -48,8 +57,11 @@ export default {
         "S",
       ],
       acao: {},
-      Acoes: {},
-      Acoes_Pessoais: {},
+      acoes: {},
+      acaoNome: ' ',
+      acoes_Pessoais: {
+
+      },
       serverURL: "ws://localhost:8080",
     };
   },
@@ -77,13 +89,13 @@ export default {
       this.connection.onmessage = (e) => {
         this.acao = JSON.parse(e.data);
         let key = Object.keys(this.acao.stocks);
-        this.Acoes[key] = this.acao.stocks[key[0]];
+        this.acoes[key] = this.acao.stocks[key[0]];
       };
     },
     wsClose() {
       this.connection.onclose = (e) => {
         console.log(
-          "Socket closed. Reconnection will be attempted in 1 second, ",
+          "Socket fechado. Reconexão será tentada em 1 segundo, ",
           e.reason
         );
         setTimeout(() => {
@@ -94,17 +106,19 @@ export default {
     wsError() {
       this.connection.onerror = (err) => {
         console.error(
-          "Socket found an error: ",
+          "Socket encontrou um erro: ",
           err.messsage,
-          "Closing socket"
+          "Fechando socket"
         );
         this.wsClose();
       };
     },
-    atualizarAcoesPessoais(e){
-      console.log('oi' + e)
-      this.Acoes_Pessoais = e;
-    }
+    atualizarAcoesPessoais(e) {
+      this.acoes_Pessoais = e;
+    },
+    getAcaoNome(e) {
+      this.acaoNome = e;
+    },
   },
   created() {
     this.wsConnect(this.serverURL);

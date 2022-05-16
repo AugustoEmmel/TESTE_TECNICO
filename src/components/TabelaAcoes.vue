@@ -10,12 +10,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(value, key, index) in Acoes_Pessoais" :key="index">
+          <tr
+            v-for="(value, key, index) in acoes_Pessoais"
+            :key="index"
+            @click="selecionarAcao(key, value)"
+          >
             <td>{{ key }}</td>
             <td>$ {{ value.toFixed(2) }}</td>
             <td>
               xx.xx%
-              <span :class="[isArrowUp ? 'material-symbols-outlined arrow arrow-up' : 'material-symbols-outlined arrow arrow-down']"> arrow_upward </span>
+              <span
+                :class="[
+                  isArrowUp
+                    ? 'material-symbols-outlined arrow arrow-up'
+                    : 'material-symbols-outlined arrow arrow-down',
+                ]"
+              >
+                arrow_upward
+              </span>
             </td>
           </tr>
         </tbody>
@@ -26,14 +38,16 @@
 
 <script>
 export default {
-  props: ["Acoes_Pessoais"],
+  props: ["acoes_Pessoais"],
   data() {
     return {
       isArrowUp: true,
     };
   },
   methods: {
-    
+    selecionarAcao(key){
+      this.$emit('escolherAcao',key)
+    },
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex-stock-tickers hideScrollbar">
     <div
-      v-for="(value, key, index) in Acoes"
+      v-for="(value, key, index) in acoes"
       :key="index"
       @click="alterarAcoes(key)"
       class="flex-ticker"
@@ -25,11 +25,11 @@
 
 <script>
 export default {
-  props: ["Acoes"],
+  props: ["acoes"],
   data() {
     return {
       isArrowUp: false,
-      Acoes_Escolhidas: {},
+      acoes_Escolhidas: {},
       showModal: false,
       Timers: {
         emit: null,
@@ -40,22 +40,18 @@ export default {
   },
   methods: {
     alterarAcoes(key) {
-      console.log(key);
-      if (this.Timers[key] && this.Acoes_Escolhidas[key]) {
+      if (this.Timers[key] && this.acoes_Escolhidas[key]) {
         clearInterval(this.Timers[key]);
         delete this.Timers[key];
-        delete this.Acoes_Escolhidas[key];
-        console.log("limpo");
+        delete this.acoes_Escolhidas[key];
         return true;
       }
       this.Timers[key] = setInterval(() => {
-        this.Acoes_Escolhidas[key] = this.Acoes[key];
-        console.log(this.Acoes_Escolhidas);
+        this.acoes_Escolhidas[key] = this.acoes[key];
       }, 1000);
     },
     emitirAcoes() {
-      this.$emit("emitirAcao", this.Acoes_Escolhidas);
-      console.log('emitiu')
+      this.$emit("emitirAcao", this.acoes_Escolhidas);
     },
   },
   mounted() {
