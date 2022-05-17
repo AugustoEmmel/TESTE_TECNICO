@@ -105,7 +105,6 @@ export default {
       updateChart(xstart, ystart, dataCount, interval);
     },
   },
-  mounted() {},
   watch: {
     acaoNome(newVal, oldVal) {
       this.montarGrafico();

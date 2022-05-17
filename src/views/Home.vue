@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import _ from 'lodash';
+import _ from "lodash";
 import Grafico from "../components/Grafico.vue";
 import TickerAcoes from "../components/TickerAcoes.vue";
 import TabelaAcoes from "../components/TabelaAcoes.vue";
@@ -84,18 +84,16 @@ export default {
         console.log("Conectador ao servidor com sucesso!");
       };
     },
-    wsOnMessage(e) {
-      // this.connection.onmessage = (e) => {
-      //   this.acao = JSON.parse(e.data);
-      //   let key = Object.keys(this.acao.stocks);
-      //   this.acoes[key] = this.acao.stocks[key[0]];
-      // };
-    
-      this.connection.onmessage = _.throttle((e) => {
-        this.acao = JSON.parse(e.data);
-        let key = Object.keys(this.acao.stocks);
-        this.acoes[key] = {preco:this.acao.stocks[key[0]]}
-      }, 50, {leading: true})
+    wsOnMessage() {
+      this.connection.onmessage = _.throttle(
+        (e) => {
+          this.acao = JSON.parse(e.data);
+          let key = Object.keys(this.acao.stocks);
+          this.acoes[key[0]].preco = this.acao.stocks[key[0]];
+        },
+        50,
+        { leading: true }
+      );
     },
     wsClose() {
       this.connection.onclose = (e) => {
@@ -124,8 +122,21 @@ export default {
     getAcaoNome(e) {
       this.acaoNome = e;
     },
+    porcentagem(menor, maior){
+      return ((maior - menor) / menor) * 100
+    },
+    construirAcoes() {
+      for (let index = 0; index < this.stocks.length; index++) {
+        this.acoes[this.stocks[index]] = {
+          preco: 0,
+          isArrowUp: false,
+          variacao: 0,
+        };
+      }
+    },
   },
   created() {
+    this.construirAcoes();
     this.wsConnect(this.serverURL);
     setTimeout(() => {
       this.subscribe({
@@ -139,7 +150,38 @@ export default {
     this.wsError();
     this.wsClose();
   },
+  watch: {
+    cloneAcoes(newVal_str, oldVal_str) {
+      let oldVal = JSON.parse(oldVal_str);
+      let newVal = JSON.parse(newVal_str);
 
+      try {
+        for (let i = 0; i < this.stocks.length; i++) {
+          if (newVal[this.stocks[i]].preco > oldVal[this.stocks[i]].preco) {
+            this.$nextTick(() => {
+              this.acoes[this.stocks[i]].isArrowUp = true;
+              this.acoes[this.stocks[i]].variacao = 
+              this.porcentagem(oldVal[this.stocks[i]].preco,newVal[this.stocks[i]].preco)
+            });
+          }
+          if (newVal[this.stocks[i]].preco < oldVal[this.stocks[i]].preco) {
+            this.$nextTick(() => {
+              this.acoes[this.stocks[i]].isArrowUp = false;
+              this.acoes[this.stocks[i]].variacao =  
+              this.porcentagem(newVal[this.stocks[i]].preco,oldVal[this.stocks[i]].preco)
+            });
+          }
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+  },
+  computed: {
+    cloneAcoes() {
+      return JSON.stringify(this.acoes);
+    },
+  },
 };
 </script>
 

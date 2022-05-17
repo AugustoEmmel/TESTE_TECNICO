@@ -18,10 +18,10 @@
             <td>{{ key }}</td>
             <td>$ {{ value.preco.toFixed(2) }}</td>
             <td>
-              xx.xx%
+              {{value.variacao.toFixed(3)}} %
               <span
                 :class="[
-                  isArrowUp
+                  value.isArrowUp
                     ? 'material-symbols-outlined arrow arrow-up'
                     : 'material-symbols-outlined arrow arrow-down',
                 ]"

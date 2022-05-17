@@ -7,11 +7,11 @@
       class="flex-ticker"
     >
       <div class="ticker-name">{{ key }}</div>
-      <div class="ticker-value" @change="salvarValorAntigo(value, $event)" >
+      <div class="ticker-value">
         {{ value.preco.toFixed(2) }}
         <span
           :class="[
-            isArrowUp
+            value.isArrowUp
               ? 'material-symbols-outlined arrow arrow-up'
               : 'material-symbols-outlined arrow arrow-down',
           ]"
@@ -28,7 +28,6 @@ export default {
   props: ["acoes"],
   data() {
     return {
-      isArrowUp: false,
       acoes_Escolhidas: {},
       showModal: false,
       Timers: {
@@ -49,7 +48,7 @@ export default {
       }
       this.Timers[key] = setInterval(() => {
         this.acoes_Escolhidas[key] = this.acoes[key];
-      }, 1000);
+      }, 50);
     },
     emitirAcoes() {
       this.$emit("emitirAcao", this.acoes_Escolhidas);
@@ -60,16 +59,6 @@ export default {
       this.emitirAcoes();
     }, 3000);
   },
-  // watch:{
-  //   acoes:{
-  //     handler(newVal, oldVal){
-  //       let keys = Object.keys(this.acoes);
-  //         for (let index = 0; index < keys.length; index++) {
-  //           if
-  //         }
-  //     }, deep:true
-  //   }
-  // }
 };
 </script>
 

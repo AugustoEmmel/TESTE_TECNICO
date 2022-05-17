@@ -16,3 +16,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.about{
+  height: 510px;
+}
+</style>
