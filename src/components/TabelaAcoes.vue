@@ -16,7 +16,7 @@
             @click="selecionarAcao(key, value)"
           >
             <td>{{ key }}</td>
-            <td>$ {{ value.toFixed(2) }}</td>
+            <td>$ {{ value.preco.toFixed(2) }}</td>
             <td>
               xx.xx%
               <span

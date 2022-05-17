@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import Grafico from "../components/Grafico.vue";
 import TickerAcoes from "../components/TickerAcoes.vue";
 import TabelaAcoes from "../components/TabelaAcoes.vue";
@@ -58,10 +59,8 @@ export default {
       ],
       acao: {},
       acoes: {},
-      acaoNome: ' ',
-      acoes_Pessoais: {
-
-      },
+      acaoNome: " ",
+      acoes_Pessoais: {},
       serverURL: "ws://localhost:8080",
     };
   },
@@ -85,12 +84,18 @@ export default {
         console.log("Conectador ao servidor com sucesso!");
       };
     },
-    wsOnMessage() {
-      this.connection.onmessage = (e) => {
+    wsOnMessage(e) {
+      // this.connection.onmessage = (e) => {
+      //   this.acao = JSON.parse(e.data);
+      //   let key = Object.keys(this.acao.stocks);
+      //   this.acoes[key] = this.acao.stocks[key[0]];
+      // };
+    
+      this.connection.onmessage = _.throttle((e) => {
         this.acao = JSON.parse(e.data);
         let key = Object.keys(this.acao.stocks);
-        this.acoes[key] = this.acao.stocks[key[0]];
-      };
+        this.acoes[key] = {preco:this.acao.stocks[key[0]]}
+      }, 50, {leading: true})
     },
     wsClose() {
       this.connection.onclose = (e) => {
@@ -127,13 +132,14 @@ export default {
         event: "subscribe",
         stocks: this.stocks,
       });
-    }, 2000);
+    }, 500);
   },
   mounted() {
     this.wsOnMessage();
     this.wsError();
     this.wsClose();
   },
+
 };
 </script>
 

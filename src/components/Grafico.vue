@@ -8,7 +8,7 @@ export default {
   props: ["acoes_Pessoais", "acaoNome"],
   data() {
     return {
-      stockChart: {},
+      stockVariance: {},
     };
   },
   methods: {
@@ -72,7 +72,7 @@ export default {
         },
       });
       var dataCount = 700,
-        ystart = 0,
+        ystart = this.acoes_Pessoais[this.acaoNome].preco,
         interval = 1000,
         xstart = currentDate.getTime() - 700 * 1000;
 
@@ -80,7 +80,7 @@ export default {
         var xVal = xstart,
           yVal = ystart;
         for (var i = 0; i < length; i++) {
-          yVal = this.acoes_Pessoais[this.acaoNome];
+          yVal = this.acoes_Pessoais[this.acaoNome].preco;
           yVal = Math.round(yVal * 100) / 100;
           dataPoints.push({ x: xVal, y: yVal });
           xVal += interval;

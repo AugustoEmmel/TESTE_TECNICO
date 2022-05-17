@@ -7,8 +7,8 @@
       class="flex-ticker"
     >
       <div class="ticker-name">{{ key }}</div>
-      <div class="ticker-value">
-        {{ value.toFixed(2) }}
+      <div class="ticker-value" @change="salvarValorAntigo(value, $event)" >
+        {{ value.preco.toFixed(2) }}
         <span
           :class="[
             isArrowUp
@@ -36,6 +36,7 @@ export default {
       },
       keyAcao: null,
       modalText: null,
+      valoresAntigos: {},
     };
   },
   methods: {
@@ -59,6 +60,16 @@ export default {
       this.emitirAcoes();
     }, 3000);
   },
+  // watch:{
+  //   acoes:{
+  //     handler(newVal, oldVal){
+  //       let keys = Object.keys(this.acoes);
+  //         for (let index = 0; index < keys.length; index++) {
+  //           if
+  //         }
+  //     }, deep:true
+  //   }
+  // }
 };
 </script>
 
